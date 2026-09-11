@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Informe — NEXUS Gaming</title>
+<style>
+@page { size: A4; margin: 18mm; }
+* { box-sizing: border-box; }
+body { font: 10pt/1.4 Arial, sans-serif; color: #202724; margin: 0; background: #e8ece6; }
+.page { width: 174mm; min-height: 259mm; padding: 0; margin: 20px auto; background: white; }
+header { border-bottom: 3px solid #507a28; padding-bottom: 12px; margin-bottom: 12px; }
+.tag { font-size: 9pt; letter-spacing: 2px; color: #507a28; font-weight: bold; }
+h1 { font-size: 22pt; line-height: 1.15; margin: 8px 0; }
+h2 { font-size: 12pt; color: #365d1c; margin: 13px 0 6px; }
+p { margin: 0 0 10px; }
+.meta { font-size: 9pt; background: #f0f5eb; padding: 10px; line-height: 1.8; }
+code { font: 9pt Consolas, monospace; }
+table { width: 100%; border-collapse: collapse; font-size: 10pt; margin: 10px 0; }
+td, th { border: 1px solid #ccd5c5; padding: 5px; text-align: left; }
+th { background: #eef4e8; }
+.note { border-left: 3px solid #648b39; padding-left: 12px; }
+footer { border-top: 1px solid #ccd5c5; margin-top: 20px; padding-top: 8px; font-size: 9pt; color: #65705e; }
+@media print { body { background: white; } .page { margin: 0; min-height: auto; width: auto; } .page + .page { break-before: page; } }
+</style></head><body>
+<article class="page">
+<header><span class="tag">LABORATORIO · PROGRAMACIÓN WEB / REACT</span><h1>NEXUS Gaming<br>Radar automático de novedades</h1><p>Diseño e implementación de una automatización en React</p></header>
+<div class="meta"><strong>Estudiante:</strong> ______________________________<br><strong>Curso / grupo:</strong> ____________________________ &nbsp; <strong>Fecha:</strong> ______________</div>
+<h2>1. Problema y objetivo</h2>
+<p>Una tienda de componentes gamer necesita destacar novedades sin que el visitante revise manualmente todos los productos o recargue la página. NEXUS Gaming automatiza la consulta de un catálogo local y la selección de hasta tres lanzamientos recientes con stock, ordenados por valoración. La tienda también permite buscar, filtrar, ordenar y agregar productos a un carrito de demostración.</p>
+<p class="note">Los productos, precios, valoraciones y fechas son ficticios. “Mejores” significa mejor valorados dentro de este catálogo. La aplicación no consulta lanzamientos reales en Internet ni realiza ventas.</p>
+<h2>2. Disparador y secuencia de tareas</h2>
+<p>El primer ciclo se programa al montar React. Después, un temporizador <code>setInterval</code> dispara una consulta cada 10 segundos. Cada ciclo ejecuta <code>fetch('/api/products')</code>; la API de Node lee <code>db.json</code>, devuelve los productos y React valida la respuesta. Un límite de 6 segundos cancela solicitudes que no terminan.</p>
+<p>El algoritmo conserva productos con stock positivo cuya fecha de lanzamiento esté entre hoy y hace 90 días, ambos inclusive, calculados en UTC. Ordena por valoración descendente, luego por fecha más reciente y, ante otro empate, por ID ascendente. Finalmente toma los tres primeros y actualiza el ranking, catálogo, hora e historial. Una lista válida sin novedades produce éxito con un ranking vacío.</p>
+<h2>3. Estados de la automatización</h2>
+<table><thead><tr><th>Estado</th><th>Comportamiento visible</th></tr></thead><tbody>
+<tr><td>Inactivo</td><td>Antes del primer ciclo o al pausar; no se programan nuevas consultas durante la pausa.</td></tr>
+<tr><td>En ejecución</td><td>Se consulta y valida la API; un candado evita peticiones simultáneas.</td></tr>
+<tr><td>Éxito</td><td>Se actualizan los datos y se espera el siguiente disparador.</td></tr>
+<tr><td>Error</td><td>Se muestra la causa, se conserva la última lectura válida y se reintenta automáticamente.</td></tr>
+</tbody></table>
+<footer>NEXUS Gaming · Informe técnico · Página 1 de 2</footer>
+</article>
+<article class="page">
+<header><span class="tag">IMPLEMENTACIÓN Y VALIDACIÓN</span><h1>Del workflow al código</h1></header>
+<h2>4. Hooks, componentes y limpieza</h2>
+<p>El proyecto usa Vite y React. El hook personalizado <code>useRadar</code> agrupa la automatización: <code>useState</code> conserva estado, datos, historial y configuración; <code>useEffect</code> programa el primer ciclo y el intervalo; <code>useRef</code> permite simular un único fallo sin añadir otro renderizado. Los botones de pausa y actualización modifican el estado que controla el efecto.</p>
+<p>El retorno de <code>useEffect</code> ejecuta <code>clearInterval</code>, limpia los temporizadores y aborta la petición mediante <code>AbortController</code>. Una bandera <code>disposed</code> evita que respuestas tardías actualicen un efecto cancelado. El bloque <code>finally</code> libera el candado y limpia el timeout. El contador visual del panel tiene su propio intervalo de un segundo y su correspondiente limpieza.</p>
+<p>La interfaz se divide en componentes: <code>ProductCard</code> se reutiliza para cada producto; <code>ProductArt</code> genera ilustraciones locales; <code>RadarPanel</code> presenta resultados y controles; <code>Cart</code> maneja el diálogo del carrito. Las reglas de validación y clasificación están separadas en <code>src/lib/catalog.js</code>. El servidor utiliza únicamente módulos de Node.</p>
+<h2>5. Manejo de errores y workflow</h2>
+<p>Se comprueba el estado HTTP y se rechazan datos incompletos, IDs duplicados, fechas imposibles y valores numéricos inválidos. Los errores de red, HTTP, JSON y tiempo de espera llevan al estado Error. La ruta <code>/api/demo-error</code> devuelve HTTP 503 para demostrar esta rama. El ciclo siguiente vuelve a consultar la ruta normal sin intervención del usuario.</p>
+<p>El diagrama adjunto, <code>workflow.svg</code> y su versión Mermaid <code>workflow.md</code>, representa inicio, disparador, petición, decisión sobre la respuesta, clasificación, caminos de éxito/error, espera y repetición. También documenta pausa, reanudación y limpieza, en correspondencia con el efecto implementado.</p>
+<h2>6. Verificación y demostración</h2>
+<p>Las pruebas automatizadas cubren límites de 90 días, fechas futuras, stock agotado, desempates, catálogo vacío y validación. Una prueba de integración comprueba que la API relee cambios del archivo y se recupera después de JSON inválido. Se verificaron compilación y análisis estático, además de carga, pausa mayor a 10 segundos, reanudación, error y recuperación, búsqueda, filtros, carrito y ancho móvil en Chrome.</p>
+<p>Para demostrar el proceso, se cambia una valoración o el stock en <code>db.json</code> y se espera el próximo ciclo. Luego se pausa, se reanuda y se simula un fallo. El historial y las capturas permiten observar el resultado. El archivo <code>demostracion.md</code> contiene el guion reproducible.</p>
+<h2>7. Alcance y conclusión</h2>
+<p>La aplicación transforma una tarea repetitiva en un flujo de estados, eventos y operaciones asíncronas con limpieza. El catálogo requiere mantenimiento manual; la consulta y clasificación son automáticas mientras la página permanece abierta y activa. Las fechas de ejemplo deben actualizarse si la demostración se realiza más adelante. El carrito no persiste al recargar ni procesa pagos.</p>
+<footer>NEXUS Gaming · Informe técnico · Página 2 de 2</footer>
+</article></body></html>

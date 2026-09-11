@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "demo": true,
+    "description": "Productos, precios, valoraciones y fechas ficticios para el laboratorio.",
+    "currency": "CRC"
+  },
+  "products": [
+    {
+      "id": "gpu-01",
+      "name": "Nexus Spectra G8",
+      "category": "Tarjetas gráficas",
+      "price": 329900,
+      "stock": 8,
+      "rating": 4.9,
+      "releaseDate": "2026-09-02",
+      "description": "16 GB de memoria · refrigeración dual · serie gamer"
+    },
+    {
+      "id": "cpu-01",
+      "name": "Nexus Core X8",
+      "category": "Procesadores",
+      "price": 219900,
+      "stock": 12,
+      "rating": 4.9,
+      "releaseDate": "2026-08-20",
+      "description": "8 núcleos · 16 hilos · diseñado para jugar y crear"
+    },
+    {
+      "id": "ram-01",
+      "name": "Pulse RGB 32 GB",
+      "category": "Memoria RAM",
+      "price": 64900,
+      "stock": 20,
+      "rating": 4.8,
+      "releaseDate": "2026-09-05",
+      "description": "Kit 2 × 16 GB DDR5 · 6000 MT/s · iluminación RGB"
+    },
+    {
+      "id": "ssd-01",
+      "name": "Velocity NVMe 2 TB",
+      "category": "Almacenamiento",
+      "price": 89900,
+      "stock": 15,
+      "rating": 4.7,
+      "releaseDate": "2026-08-12",
+      "description": "2 TB de almacenamiento · interfaz PCIe · formato M.2"
+    },
+    {
+      "id": "key-01",
+      "name": "Phantom TKL Pro",
+      "category": "Periféricos",
+      "price": 54900,
+      "stock": 9,
+      "rating": 4.6,
+      "releaseDate": "2026-07-30",
+      "description": "Teclado mecánico compacto · switches lineales · RGB"
+    },
+    {
+      "id": "mon-01",
+      "name": "Horizon QHD 27",
+      "category": "Monitores",
+      "price": 179900,
+      "stock": 5,
+      "rating": 4.8,
+      "releaseDate": "2026-07-15",
+      "description": "27 pulgadas · resolución QHD · panel de 165 Hz"
+    },
+    {
+      "id": "gpu-02",
+      "name": "Nexus Spectra G6",
+      "category": "Tarjetas gráficas",
+      "price": 199900,
+      "stock": 11,
+      "rating": 4.5,
+      "releaseDate": "2026-05-10",
+      "description": "8 GB de memoria · formato compacto · doble ventilador"
+    },
+    {
+      "id": "cpu-02",
+      "name": "Nexus Core X6",
+      "category": "Procesadores",
+      "price": 139900,
+      "stock": 16,
+      "rating": 4.6,
+      "releaseDate": "2026-06-21",
+      "description": "6 núcleos · 12 hilos · multitarea para tu día a día"
+    },
+    {
+      "id": "ram-02",
+      "name": "Pulse Stealth 16 GB",
+      "category": "Memoria RAM",
+      "price": 34900,
+      "stock": 22,
+      "rating": 4.4,
+      "releaseDate": "2026-04-02",
+      "description": "Kit DDR5 de 16 GB · disipador de perfil bajo"
+    },
+    {
+      "id": "ssd-02",
+      "name": "Velocity NVMe 1 TB",
+      "category": "Almacenamiento",
+      "price": 49900,
+      "stock": 18,
+      "rating": 4.5,
+      "releaseDate": "2026-08-01",
+      "description": "1 TB de almacenamiento · lectura rápida · formato M.2"
+    },
+    {
+      "id": "key-02",
+      "name": "Phantom Mini 60",
+      "category": "Periféricos",
+      "price": 39900,
+      "stock": 0,
+      "rating": 5,
+      "releaseDate": "2026-09-07",
+      "description": "Teclado mecánico 60% · conexión USB-C · sin stock"
+    },
+    {
+      "id": "mon-02",
+      "name": "Horizon FHD 24",
+      "category": "Monitores",
+      "price": 109900,
+      "stock": 7,
+      "rating": 4.3,
+      "releaseDate": "2026-03-18",
+      "description": "24 pulgadas · resolución Full HD · panel de 144 Hz"
+    }
+  ]
+}
